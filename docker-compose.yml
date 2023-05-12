@@ -1,0 +1,28 @@
+version: "3.4"
+services:
+  commercefrontend:
+    container_name: commercefrontend
+    restart: unless-stopped
+    image: danielyaghoobian/commerce-frontend:latest
+    networks:
+      z_internal:
+    environment:
+      - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
+      - REACT_APP_AUTH0AUDIENCE=${REACT_APP_AUTH0AUDIENCE}
+      - REACT_APP_AUTH0DOMAIN=${REACT_APP_AUTH0DOMAIN}
+      - REACT_APP_AUTH0CLIENTID=${REACT_APP_AUTH0CLIENTID}
+  commercebackend:
+    container_name: commercebackend
+    restart: unless-stopped
+    image: danielyaghoobian/commercebackend:latest
+    networks:
+      z_internal:
+    environment:
+      - CLIENT_ORIGIN_URL=${CLIENT_ORIGIN_URL}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - MONGOURI=${MONGOURI}
+      - DATABASENAME=${DATABASENAME}
+networks:
+  z_internal:
+    external: true
